@@ -1,0 +1,266 @@
+---
+documentclass: book
+classoption: oneside
+title: "Genomic evidence supports endometriosis as a systemic disease and reveals disease-specific therapeutic targeting of neutrophil degranulation"
+vignette: >
+ %\VignetteIndexEntry{END Booklet}
+ %\VignetteEngine{knitr::rmarkdown}
+ %\VignetteEncoding{UTF-8}
+output: 
+  BiocStyle::html_document:
+        toc: true
+        toc_depth: 3
+        number_sections: true
+        theme: journal
+        highlight: monochrome
+        toc_float: true
+        code_folding: hide
+---
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(collapse=TRUE, comment="##")
+knitr::opts_chunk$set(dpi=300)
+knitr::opts_chunk$set(cache=FALSE)
+knitr::opts_chunk$set(echo=TRUE)
+knitr::opts_chunk$set(warning=FALSE)
+knitr::opts_chunk$set(message=FALSE)
+knitr::opts_chunk$set(fig_cap="yes")
+knitr::opts_chunk$set(eval=F)
+```
+
+
+# Overview {#index}
+
+```{r logo, fig.cap="", fig.width=10, fig.height=5, echo=FALSE, eval=T, fig.align="left",out.width="40%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.END.logo.png")
+grid.raster(img)
+```
+
+- **Motivation**: Endometriosis, traditionally viewed as a chronic disease restricted to the pelvis causing pelvic pain and infertility, is increasingly recognised as a systemic disease with multi-organ effects (see [this review](https://pubmed.ncbi.nlm.nih.gov/33640070)). 
+
+- **Approach**: We reinforce the evolving concept of endometriosis as a systemic disease, in light of genomic evidence/prioritisation leveraging genome-wide associations in disease, regulatory genomics in disease-relevant cell types, states and tissues, and the knowledge of gene interactions. Done so through adapting our recently established genetics-led target prioritisation approach ([Pi](https://pubmed.ncbi.nlm.nih.gov/31253980)) applied to summary data from genome-wide association studies in endometriosis (for example, [the most recent](https://pubmed.ncbi.nlm.nih.gov/28537267)), which generated a ranked list of >14,000 [prioritised targets].
+
+- **Findings**: Target genes at the leading prioritisation reveal [cellular basis] and [molecular hallmarks] that are consistent with systemic disease manifestations. Pathway crosstalk-based attack analysis identifies the critical gene AKT1, and in the context of this gene, further identifies genes (including ESR1) that are already targeted by licensed medications in other diseases (see [Pathway crosstalk]). Cross-disease prioritisation map enables identification of shared and distinct targets between endometriosis and autoimmune diseases (see [Cross-disease comparisons]). Shared target genes support repurposing opportunities of immunomodulatory drugs (see [Cluster C6]), while endometriosis-specific genes suggest therapeutic potentials of targeting neutrophil degranulation (see [Cluster C5]). 
+
+- **Conclusion**: Our results, together with target prioritisation atlas made available at https://23verse.github.io/end, may be of translational use for better treatments in patients with endometriosis. Please email [us](mailto:fh12355@rjh.com.cn) for more information.
+
+
+```{r, eval=FALSE, echo=FALSE}
+cd ~/Sites/XGR/ENDO/BOOKLET
+################################################
+R
+library(tidyverse)
+
+## load
+load("now.ENDO_booklet.RData")
+## save
+save(list=ls(), file="now.ENDO_booklet.RData", compress="xz")
+
+## bookdown::render_book + bookdown::gitbook
+## use configuration in '_output.yml' and '_bookdown.yml'
+bookdown::render_book("now.ENDO_booklet.Rmd", c("bookdown::gitbook","bookdown::pdf_book","bookdown::tufte_html_book")[1])
+
+q('no')
+
+####################################################
+
+##########################
+https://23verse.github.io/end
+##########################
+## bookdown::render_book + bookdown::gitbook
+cd ~/Sites/SVN/github/end
+# delete previous *.html *.png *.css *.js *.ttf *.Rmd files *.yml files
+find ./ -type f -name '*.html' -o -type f -name '*.png' -o -type f -name '*.css' -o -type f -name '*.js' -o -type f -name '*.ttf' -o -type f -name '*.Rmd' -o -type f -name '*.yml' -o -type f -name '*.RDS' -o -type f -name '*.r' | xargs rm -rf
+############
+# copy the whole package from ~/Sites/XGR/ENDO/BOOKLET/ENDO2booklet to ~/Sites/SVN/github/end
+cp -rf ~/Sites/XGR/ENDO/BOOKLET/ENDO2booklet/* ./
+# copy/rename ~/Sites/XGR/ENDO/BOOKLET/now.ENDO_booklet.Rmd to ~/Sites/SVN/github/end/end.Rmd
+cp -rf ~/Sites/XGR/ENDO/BOOKLET/now.ENDO_booklet.Rmd ./end.Rmd
+cp -rf ~/Sites/XGR/ENDO/BOOKLET/_bookdown.yml ./_bookdown.yml
+cp -rf ~/Sites/XGR/ENDO/BOOKLET/_output.yml ./_output.yml
+# add new *.html *.png *.css *.js *.ttf *.Rmd *.yml files
+git status | grep 'modified' | awk '{print $2}' | xargs git add
+git status | grep 'deleted' | awk '{print $2}' | xargs git rm
+find ./ -type f -name '*.html' -o -type f -name '*.png' -o -type f -name '*.css' -o -type f -name '*.js' -o -type f -name '*.ttf' -o -type f -name '*.Rmd' -o -type f -name '*.yml' -o -type f -name '*.RDS' -o -type f -name '*.r' | xargs git add
+git add --all
+git commit -m 'Update kids'
+git push origin main
+##########################
+
+####################################################
+## GitHub Pages
+
+One site per account but unlimited projects can be created from https://pages.github.com:
+
+> **One site `https://github.com/23verse/23verse.github.io`**
+
+# visit https://github.com/new (enter "23verse.github.io" -> Initialize this repository with a README)
+# clone into the local machine 
+cd ~/Sites/SVN/github
+git clone git@github.com:23verse/23verse.github.io
+cd ~/Sites/SVN/github/23verse.github.io
+git pull origin master
+## https://github.com/23verse/23verse.github.io/settings/access: add "hfang-bristol"
+echo "Hello 23verse" > index.html
+git add --all
+git commit -m 'Initial commit'
+git push origin master
+# Alive (https://23verse.github.io)
+
+> **A project `https://github.com/23verse/end`**
+
+# visit https://github.com/new (enter "end" -> Initialize this repository with a README)
+## https://github.com/23verse/end/settings/access: add "hfang-bristol"
+# clone into the local machine 
+cd ~/Sites/SVN/github
+git clone git@github.com:23verse/end.git
+cd ~/Sites/SVN/github/end
+git pull origin main
+echo "Hello end" > index.html
+git add --all
+git commit -m 'Initial commit'
+git push origin main
+# visit https://github.com/23verse/end/settings -> GitHub Pages (main/root)
+# Alive (https://23verse.github.io/end): Genomic prioritisation and evaluation of target genes for endometriosis in endometriosis
+####################################################
+```
+
+```{r, eval=F, echo=F}
+library(tidyverse)
+RData.location <- "~/Sites/XGR/ENDO/BOOKLET"
+```
+
+```{r, eval=F, echo=F}
+## ENDO_priority.txt.gz
+cp ~/Databases/grant_app/jobs/Oxford/Oxford_Wellcome_Trust_Centre_for_Human_Genetics/ULTRA-DD/MDPI/ENDO/outputs/ENDO_priority.txt.gz ~/Sites/XGR/ENDO/BOOKLET
+
+## END_hallmark.xlsx
+cp ~/Databases/grant_app/jobs/Oxford/Oxford_Wellcome_Trust_Centre_for_Human_Genetics/ULTRA-DD/MDPI/ENDO/outputs/END_hallmark.xlsx ~/Sites/XGR/ENDO/BOOKLET
+
+## END_xcell.xlsx
+cp ~/Databases/grant_app/jobs/Oxford/Oxford_Wellcome_Trust_Centre_for_Human_Genetics/ULTRA-DD/MDPI/ENDO/outputs/END_xcell.xlsx ~/Sites/XGR/ENDO/BOOKLET
+
+## END_subg_nodes.xlsx
+cp ~/Databases/grant_app/jobs/Oxford/Oxford_Wellcome_Trust_Centre_for_Human_Genetics/ULTRA-DD/MDPI/ENDO/outputs/END_subg_nodes.xlsx ~/Sites/XGR/ENDO/BOOKLET
+
+## END_crossdisease_suprahex.xlsx
+cp ~/Databases/grant_app/jobs/Oxford/Oxford_Wellcome_Trust_Centre_for_Human_Genetics/ULTRA-DD/MDPI/ENDO/outputs/END_crossdisease_suprahex.xlsx ~/Sites/XGR/ENDO/BOOKLET
+
+```
+
+
+```{r, eval=F, echo=F}
+cd ~/Databases/grant_app/jobs/Oxford/Oxford_Wellcome_Trust_Centre_for_Human_Genetics/ULTRA-DD/FrontierImmunology/KidneyStone
+scp ./inputs/KSD_gwas_data.txt.gz galahad.well.ox.ac.uk:/var/www/bigdata
+scp ./outputs/crossdisease_matrix.txt galahad.well.ox.ac.uk:/var/www/bigdata
+```
+
+# Prioritised targets
+
+```{r manhattan, fig.cap="Manhattan plot illustrating priority rating (y-axis) for top 5% target genes (color-coded by chromosomes; x-axis), with top 30 labelled.", fig.width=10, fig.height=3.6, echo=FALSE, eval=T, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.END.manhattan.png")
+grid.raster(img)
+```
+
+Notably, genes are ranked by priority rating (scored 0-5; see the column `Rating`).
+
+```{r, echo=FALSE, eval=T}
+read_delim("ENDO_priority.txt.gz", delim="\t") %>% transmute(Target=name, Rank=rank, Rating=signif(rating,digits=4), Description=description) %>% DT::datatable(options=list(pageLength=10,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
+```
+
+# Molecular hallmarks
+
+```{r hallmark, fig.cap="Scatter plot of molecular hallmark enrichments, including normalised enrichment score (x-axis), fraction of hallmark genes found at the leading prioritisation (y-axis), and the enrichment significance (FDR) calculated using gene set enrichment analysis (GSEA).", fig.width=10, fig.height=10, echo=FALSE, eval=T, fig.align="center",out.width="60%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.END.hallmark.png")
+grid.raster(img)
+```
+
+Notably, the column `Fraction` refer to the fraction of hallmark genes found at the leading prioritisation.
+
+```{r, echo=FALSE, eval=T}
+openxlsx::read.xlsx('END_hallmark.xlsx') %>% as_tibble() %>% transmute(Hallmark=hallmark, NES=signif(nes,digits=4), FDR=signif(adjp,digits=4), Fraction=signif(frac,digits=3), Description=description) %>% DT::datatable(options=list(pageLength=8,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
+```
+
+# Cellular basis 
+
+```{r xcell, fig.cap="Circular overview of cell type enrichments, with nodes sized by the normalised enrichment score (NES) and colored by the enrichment significance (FDR) calculated using gene set enrichment analysis (GSEA).", fig.width=10, fig.height=6, echo=FALSE, eval=T, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.END.xcell.png")
+grid.raster(img)
+```
+
+Notably, the column `Namespace` refer to the cell lineages (`Epithelial`, `Lymphoid`, `Myeloid` and `Stroma`).
+
+```{r, echo=FALSE, eval=T}
+openxlsx::read.xlsx('END_xcell.xlsx') %>% as_tibble() %>% filter(namespace!='HSC') %>% transmute('Cell types '=label, NES=signif(nes,digits=4), FDR=signif(adjp,digits=4), Namespace=namespace) %>% DT::datatable(options=list(pageLength=10,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
+```
+
+# Pathway crosstalk
+
+```{r crosstalk, fig.cap="Pathway crosstalk-based attack analysis identifies critical genes and repurposes licensed medications. (A) Pathway crosstalk identified by integrating target prioritisation information with knowledge of gene interactions. Nodes are labelled by gene symbols together with priority rank. Cross-talk genes that are currently targeted by approved drugs in other disease indications are highlighted in red. These ap-proved drug target genes (y-axis) and disease indications (x-axis) are detailed beneath, with dots indexed in number and referenced on the right panel showing information on drugs and mechanisms of action. (B) Effect of node removals on the crosstalk. Top: the single-node effect maximised by removing ATK1, the maximum effect of removing an additional approved drug target in the context of AKT1, and the maximum effect of removing an addi-tional approved drug target in the context of AKT1 and ESR1. Bottom: node removals are indicated by colored circles.", fig.width=10, fig.height=7.5, echo=FALSE, eval=T, fig.align="center",out.width="100%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.END.crosstalk.png")
+grid.raster(img)
+```
+
+```{r, echo=FALSE, eval=T}
+openxlsx::read.xlsx('END_subg_nodes.xlsx') %>% as_tibble() %>% transmute(Target=name, Rank=rank, Rating=signif(rating,digits=4), Description=description) %>% DT::datatable(options=list(pageLength=10,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons'))
+```
+
+
+# Cross-disease comparisons
+
+## Prioritisation map
+
+```{r suprahex, fig.cap="Illustration of the supra-hexagonal map, consisting of 91 hexagons indexed circularly outward (H1-H91; such circular indexing is indicated in colors). Also displayed are genes in each hexagon. Beneath are ridge plots for two hexagons, showing density of priority rating for genes in H77 (bottom-left) and in H62 (bottom-right). CRO: Crohn's Disease; MS: Multiple Sclerosis; RA: Rheumatoid Arthritis; SLE: Systemic Lupus Erythematosus; SJO: Sjögren’s syndrome; UC: Ulcerative Colitis.", fig.width=10, fig.height=9, echo=FALSE, eval=T, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.END.suprahex.png")
+grid.raster(img)
+```
+
+## Target clusters
+
+```{r cluster, fig.cap="Identification of shared and distinct target gene clusters. (A) Each map illustrates illustrating a disease-specific gene prioritisation profile, while consensus neighbour-joining tree captures the similarity of inter-disease prioritisation profiles. (B) Target gene clusters. The prioritisation map divided into 6 clusters (C1-C6), each covering continuous hexagons as col-or-coded.", fig.width=10, fig.height=4.8, echo=FALSE, eval=T, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.END.cluster.png")
+grid.raster(img)
+```
+
+## Cluster C6
+
+```{r c6, fig.cap="Repurposing evidence for immunomodulatory drugs based on shared target genes in the cluster C6. Heatmap illustrates target genes in C6 prioritised across 7 diseases, with annotations to IL, IFN, TLR, FCER1 and TCR signaling pathways, together with information on approved drug targets, repurposed drugs, mechanisms of action and disease indications.", fig.width=10, fig.height=12.5, echo=FALSE, eval=T, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.END.C6.png")
+grid.raster(img)
+```
+
+## Cluster C5
+
+```{r c5, fig.cap="Tractable evidence for targeting neutrophil degranulation based on genes prioritised specific to endometriosis in the cluster C5. Heatmap illustrates target genes in C5 prioritised across 7 diseases, together with information on functional relevance to neutrophil degranulation, the tractability (the number of druggable pockets), and therapeutic approval (approved drug targets, repurposed drugs, mechanisms of action and disease indications).", fig.width=10, fig.height=12.6, echo=FALSE, eval=T, fig.align="center",out.width="90%"}
+library(png)
+library(grid)
+img <- readPNG("booklet.END.C5.png")
+grid.raster(img)
+```
+
+## Clustered genes
+
+Notably, the column `END` refer to the priority rating for endometriosis.
+
+```{r, echo=FALSE, eval=T}
+openxlsx::read.xlsx('END_crossdisease_suprahex.xlsx') %>% as_tibble() %>% arrange(Cluster,Index,Target) %>% mutate_at(c('END','CRO','MS','RA','SJO','SLE','UC'), 
+function(x) signif(x,digits=3)) -> df
+
+df %>% DT::datatable(options=list(pageLength=10,searchHighlight=T,dom='Bfrtip',buttons=c('csv','copy'), dom='t',scrollX=T,fixedColumns=list(leftColumns=3)), style='default', caption="", rownames=FALSE, escape=F, extensions=c('Buttons','FixedColumns'))
+```
