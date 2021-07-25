@@ -159,7 +159,7 @@ scp ./outputs/crossdisease_matrix.txt galahad.well.ox.ac.uk:/var/www/bigdata
 
 # Prioritised targets
 
-```{r manhattan, fig.cap="Manhattan plot illustrating priority rating (y-axis) for top 5% target genes (color-coded by chromosomes; x-axis), with top 30 labelled.", fig.width=10, fig.height=3.6, echo=FALSE, eval=T, fig.align="center",out.width="90%"}
+```{r manhattan, fig.cap="Manhattan plot illustrating priority rating (y-axis) for top 5% target genes (color-coded by chromosomes; x-axis), with top 30 labelled.", fig.width=10, fig.height=3.6, echo=FALSE, eval=T, fig.align="center",out.width="100%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.END.manhattan.png")
