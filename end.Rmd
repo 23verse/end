@@ -40,7 +40,7 @@ grid.raster(img)
 
 - **Motivation**: Endometriosis, traditionally viewed as a chronic disease restricted to the pelvis causing pelvic pain and infertility, is increasingly recognised as a systemic disease with multi-organ effects (see [this review](https://pubmed.ncbi.nlm.nih.gov/33640070)). 
 
-- **Approach**: We reinforce the evolving concept of endometriosis as a systemic disease, in light of genomic evidence/prioritisation leveraging genome-wide associations in disease, regulatory genomics in disease-relevant cell types, states and tissues, and the knowledge of gene interactions. Done so through adapting our recently established genetics-led target prioritisation approach ([Pi](https://pubmed.ncbi.nlm.nih.gov/31253980)) applied to summary data from genome-wide association studies in endometriosis (for example, [the most recent](https://pubmed.ncbi.nlm.nih.gov/28537267)), which generated a ranked list of >14,000 [prioritised targets].
+- **Approach**: We reinforce the evolving concept of endometriosis as a systemic disease, in light of genomic evidence/prioritisation leveraging genome-wide associations in disease, regulatory genomics in disease-relevant cell types, states and tissues, and the knowledge of gene interactions. Done so through adapting our recently established genetics-led target prioritisation approach ([Priority index](https://pubmed.ncbi.nlm.nih.gov/31253980)) applied to summary data from genome-wide association studies in endometriosis (for example, [the most recent](https://pubmed.ncbi.nlm.nih.gov/28537267)), which generated a ranked list of >14,000 [prioritised targets].
 
 - **Findings**: Target genes at the leading prioritisation reveal [cellular basis] and [molecular hallmarks] that are consistent with systemic disease manifestations. Pathway crosstalk-based attack analysis identifies the critical gene AKT1, and in the context of this gene, further identifies genes (including ESR1) that are already targeted by licensed medications in other diseases (see [Pathway crosstalk]). Cross-disease prioritisation map enables identification of shared and distinct targets between endometriosis and autoimmune diseases (see [Cross-disease comparisons]). Shared target genes support repurposing opportunities of immunomodulatory drugs (see [Cluster C6]), while endometriosis-specific genes suggest therapeutic potentials of targeting neutrophil degranulation (see [Cluster C5]). 
 
@@ -151,12 +151,6 @@ cp ~/Databases/grant_app/jobs/Oxford/Oxford_Wellcome_Trust_Centre_for_Human_Gene
 ```
 
 
-```{r, eval=F, echo=F}
-cd ~/Databases/grant_app/jobs/Oxford/Oxford_Wellcome_Trust_Centre_for_Human_Genetics/ULTRA-DD/FrontierImmunology/KidneyStone
-scp ./inputs/KSD_gwas_data.txt.gz galahad.well.ox.ac.uk:/var/www/bigdata
-scp ./outputs/crossdisease_matrix.txt galahad.well.ox.ac.uk:/var/www/bigdata
-```
-
 # Prioritised targets
 
 ```{r manhattan, fig.cap="Manhattan plot illustrating priority rating (y-axis) for top 5% target genes (color-coded by chromosomes; x-axis), with top 30 labelled.", fig.width=10, fig.height=3.6, echo=FALSE, eval=T, fig.align="center",out.width="100%"}
@@ -204,7 +198,7 @@ openxlsx::read.xlsx('END_xcell.xlsx') %>% as_tibble() %>% filter(namespace!='HSC
 
 # Pathway crosstalk
 
-```{r crosstalk, fig.cap="Pathway crosstalk-based attack analysis identifies critical genes and repurposes licensed medications. (A) Pathway crosstalk identified by integrating target prioritisation information with knowledge of gene interactions. Nodes are labelled by gene symbols together with priority rank. Cross-talk genes that are currently targeted by approved drugs in other disease indications are highlighted in red. These ap-proved drug target genes (y-axis) and disease indications (x-axis) are detailed beneath, with dots indexed in number and referenced on the right panel showing information on drugs and mechanisms of action. (B) Effect of node removals on the crosstalk. Top: the single-node effect maximised by removing ATK1, the maximum effect of removing an additional approved drug target in the context of AKT1, and the maximum effect of removing an addi-tional approved drug target in the context of AKT1 and ESR1. Bottom: node removals are indicated by colored circles.", fig.width=10, fig.height=7.5, echo=FALSE, eval=T, fig.align="center",out.width="100%"}
+```{r crosstalk, fig.cap="Pathway crosstalk-based attack analysis identifies critical genes and repurposes licensed medications. (A) Pathway crosstalk identified by integrating target prioritisation information with knowledge of gene interactions. Nodes are labelled by gene symbols together with priority rank. Crosstalk genes that are currently targeted by approved drugs in other disease indications are highlighted in red. These approved drug target genes (y-axis) and disease indications (x-axis) are detailed beneath, with dots indexed in number and referenced on the right panel showing information on drugs and mechanisms of action. (B) Effect of node removals on the crosstalk. Top: the single-node effect maximised by removing ATK1, the maximum effect of removing an additional approved drug target in the context of AKT1, and the maximum effect of removing an additional approved drug target in the context of AKT1 and ESR1. Bottom: node removals are indicated by colored circles.", fig.width=10, fig.height=7.5, echo=FALSE, eval=T, fig.align="center",out.width="100%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.END.crosstalk.png")
@@ -229,7 +223,7 @@ grid.raster(img)
 
 ## Target clusters
 
-```{r cluster, fig.cap="Identification of shared and distinct target gene clusters. (A) Each map illustrates illustrating a disease-specific gene prioritisation profile, while consensus neighbour-joining tree captures the similarity of inter-disease prioritisation profiles. (B) Target gene clusters. The prioritisation map divided into 6 clusters (C1-C6), each covering continuous hexagons as col-or-coded.", fig.width=10, fig.height=4.8, echo=FALSE, eval=T, fig.align="center",out.width="90%"}
+```{r cluster, fig.cap="Identification of shared and distinct target gene clusters. (A) Each map illustrates illustrating a disease-specific gene prioritisation profile, while consensus neighbour-joining tree captures the similarity of inter-disease prioritisation profiles. (B) Target gene clusters. The prioritisation map divided into 6 clusters (C1-C6), each covering continuous hexagons as color-coded.", fig.width=10, fig.height=4.8, echo=FALSE, eval=T, fig.align="center",out.width="90%"}
 library(png)
 library(grid)
 img <- readPNG("booklet.END.cluster.png")
