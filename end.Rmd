@@ -1,7 +1,7 @@
 ---
 documentclass: book
 classoption: oneside
-title: "Genomic evidence supports endometriosis as a systemic disease and reveals disease-specific therapeutic targeting of neutrophil degranulation"
+title: "Genomic evidence supports the recognition of endometriosis being an inflammatory systemic disease"
 vignette: >
  %\VignetteIndexEntry{END Booklet}
  %\VignetteEngine{knitr::rmarkdown}
